@@ -17,10 +17,10 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
     Button plus, sub, multi, division, equal, delete, credits;
     private double num;
-    private double res;
-    private String operator, str, sign;
+    private double result
+            ;
+    private String operator, str;
     private EditText display;
-    private TextView name;
     private int count;
 
     @Override
@@ -41,82 +41,179 @@ public class MainActivity extends AppCompatActivity {
         equal = findViewById(R.id.equal);
         delete = findViewById(R.id.delete);
         credits = findViewById(R.id.credits);
-        name = findViewById(R.id.NameTv);
+        result=0;
+        operator="";
+        str="";
+        count=0;
+
+    }
+    public void equal(View view) {
+        if (operator.equals("+")) {
+            str = display.getText().toString();
+            num = Float.parseFloat(str);
+            result += num;
+        }
+        if (operator.equals("-")) {
+            str = display.getText().toString();
+            num = Float.parseFloat(str);
+            result -= num;
+        }
+        if (operator.equals("*")) {
+            str = display.getText().toString();
+            num = Float.parseFloat(str);
+            result *= num;
+        }
+        if (operator.equals("/")) {
+            str = display.getText().toString();
+            num = Float.parseFloat(str);
+            if(num==0)
+                display.setText("Error");
+
+            else {
+                result /= num;
+                display.setText(result + "");
+            }
+        }
+        else
+            display.setText(result+"");
+
     }
 
-    public void add(View view) {
-        res = Double.parseDouble(display.getText().toString());
-        sign = "+";
+    public void plus(View view) {
+
+        str=display.getText().toString();
+        if(!str.isEmpty()){
+            count+=1;
+            num=Float.parseFloat(str);
+            if(operator.equals("-"))
+                result-=num;
+            else if(operator.equals("*"))
+                result*=num;
+            else if(operator.equals("/")) {
+                if (num == 0)
+                    display.setText("Error");
+                else
+                    result /= num;
+            }
+            else
+                result+=num;
+            operator="+";
+        }
+
         display.setText("");
+        display.getHint();
+
     }
 
+    public void delete(View view) {
+        count=0;
+        result=0;
+        operator="";
+        display.setText("");
+        display.getHint();
+    }
 
-    public void mul(View view) {
-            res = Double.parseDouble(display.getText().toString());
-            sign = "*";
-            display.setText("");
+    public void sub(View view) {
+
+        str=display.getText().toString();
+        if(!str.isEmpty()){
+            count+=1;
+            num=Float.parseFloat(str);
+            if(operator.equals("+"))
+                result+=num;
+            else if(operator.equals("*"))
+                result*=num;
+            else if(operator.equals("/")) {
+                if (num == 0)
+                    display.setText("Error");
+                else
+                    result /= num;
+            }
+            else{
+                if(count==1)
+                    if(operator.equals(""))
+                        result=num;
+                    else
+                        result=Float.valueOf((float) -num);
+                else
+                    result-=num;
+            }
+
         }
 
-        public void sub(View view) {
-            res = Double.parseDouble(display.getText().toString());
-            sign = "-";
-            display.setText("");
-        }
+        operator="-";
+        display.setText("");
+        display.getHint();
+    }
 
-        public void div(View view) {
-            res = Double.parseDouble(display.getText().toString());
-            sign = "/";
-            display.setText("");
-        }
-
-        public void equal(View view) {
-            if (operator.equals("+")) {
-                str = display.getText().toString();
-                num = Float.parseFloat(str);
-                res += num;
-            }
-            if (operator.equals("-")) {
-                str = display.getText().toString();
-                num = Float.parseFloat(str);
-                res -= num;
-            }
-            if (operator.equals("*")) {
-                str = display.getText().toString();
-                num = Float.parseFloat(str);
-                res *= num;
-            }
-            if (operator.equals("/")) {
-                str = display.getText().toString();
-                num = Float.parseFloat(str);
+    public void multi(View view) {
+        str=display.getText().toString();
+        if(!str.isEmpty()){
+            count+=1;
+            num=Float.parseFloat(str);
+            if(operator.equals("+"))
+                result+=num;
+            else if(operator.equals("-"))
+                result-=num;
+            else if(operator.equals("/")){
                 if(num==0)
                     display.setText("Error");
-
-                else {
-                    res /= num;
-                    display.setText(res + "");
-                }
+                else
+                    result /= num;
             }
-            else
-                display.setText(res+"");
+            else{
+                if(count==1)
+                    result=num;
+                else
+                    result*=num;
+            }
+
+            operator="*";
 
         }
 
-        public void delete(View view) {
-            count=0;
-            res=0;
-            operator="";
-            display.setText("");
-            display.getHint();
-        }
-
-        public void Goto(View view) {
-            Intent si = new Intent(this,MainActivity2.class);
-            if(display.getText().toString().equals("Error"))
-                si.putExtra("error","Error");
-            else
-                si.putExtra("num",res);
-            startActivity(si);
-
-        }
+        display.setText("");
+        display.getHint();
 
     }
+
+    public void division(View view) {
+        str=display.getText().toString();
+        if(!str.isEmpty()){
+            count+=1;
+            num=Float.parseFloat(str);
+            if(operator.equals("+"))
+                result+=num;
+            else if(operator.equals("-"))
+                result-=num;
+            else if (operator.equals("*"))
+                result*=num;
+            else{
+                if(count==1)
+                    result=num;
+                else if (num == 0)
+                    display.setText("Error");
+                else
+                    result/=num;
+            }
+
+            operator="/";
+        }
+
+        display.setText("");
+        display.getHint();
+
+    }
+
+    public void credits(View view) {
+        Intent si = new Intent(this,MainActivity2.class);
+        if(display.getText().toString().equals("Error"))
+            si.putExtra("error","Error");
+        else
+            si.putExtra("num",result);
+        startActivity(si);
+
+    }
+
+}
+

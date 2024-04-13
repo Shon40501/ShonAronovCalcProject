@@ -15,15 +15,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-    Button plus,sub,multi,division,equal,delete,credits;
+    Button plus, sub, multi, division, equal, delete, credits;
     private double num;
     private double res;
-    private String operator,str,sign;
+    private String operator, str, sign;
     private EditText display;
     private TextView name;
     private int count;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,22 +34,24 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         display = findViewById(R.id.display);
-        plus=(Button)findViewById(R.id.plus);
-        sub=(Button)findViewById(R.id.sub);
-        multi=(Button)findViewById(R.id.multi);
-        division=(Button)findViewById(R.id.division);
-        equal=(Button)findViewById(R.id.equal);
-        delete=(Button)findViewById(R.id.delete);
-        credits=(Button)findViewById(R.id.credits);
-        name=findViewById(R.id.NameTv);
+        plus = findViewById(R.id.plus);
+        sub = findViewById(R.id.sub);
+        multi = findViewById(R.id.multi);
+        division = findViewById(R.id.division);
+        equal = findViewById(R.id.equal);
+        delete = findViewById(R.id.delete);
+        credits = findViewById(R.id.credits);
+        name = findViewById(R.id.NameTv);
+    }
 
-        public void add(View view) {
-            res = Double.parseDouble(display.getText().toString());
-            sign = "+";
-            display.setText("");
-        }
+    public void add(View view) {
+        res = Double.parseDouble(display.getText().toString());
+        sign = "+";
+        display.setText("");
+    }
 
-        public void mul(View view) {
+
+    public void mul(View view) {
             res = Double.parseDouble(display.getText().toString());
             sign = "*";
             display.setText("");
@@ -120,4 +120,3 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-}
